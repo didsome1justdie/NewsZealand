@@ -1,0 +1,14 @@
+html {
+    background-color: darkcyan;
+}
+
+body {
+    background-color: darkcyan !important;
+}
+
+.articleCard {
+    background-color: bisque;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin:10px;
+}

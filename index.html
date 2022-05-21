@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="NewsWebsiteApp">
+<head>
+    <meta charset="UTF-8">
+    <!-- Required javascript code start -->
+        <!-- AngularJs -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+        <!-- JQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Personal -->
+        <script src="websiteController.js"></script>
+    <!-- Required javascript code end -->
+
+    <!-- Styling start -->
+        <!-- Personal -->
+        <link rel="stylesheet" href="websiteStyles.css">
+        <!-- Bootstrap -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Styling end -->
+
+    <!-- Page title -->
+    <title>NewsZealand</title>
+</head>
+<body>
+<div class="container-fluid" ng-controller="WebsiteController as controllerObject">
+
+    <!-- Page heading -->
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h1 style="text-align: center;">Welcome to NewsZealand, your news article website</h1>
+        </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <div style="text-align: center;">
+                <button ng-disabled="controllerObject.currentIndex < 9" ng-click="controllerObject.getPreviousArticles()">Previous articles</button>
+                <button ng-disabled="controllerObject.currentIndex > (controllerObject.articleIdList.length - 8)" ng-click="controllerObject.getNextArticles()">Next articles</button>
+                <br>
+                <!-- Page indicator -->
+                <p>{{controllerObject.currentIndex +
+                    ' to ' +
+                    (controllerObject.currentIndex + controllerObject.currentPageArticles.length - 1) +
+                    ' of ' +
+                    controllerObject.articleIdList.length}}</p>
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Article list -->
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" >
+            <div class="row">
+                <div class="col-sm-4"
+                     ng-if="controllerObject.currentPageArticles &&
+                            controllerObject.currentPageArticles.length &&
+                            controllerObject.currentPageArticles.length > 0"
+                     ng-repeat="article in controllerObject.currentPageArticles">
+                    <div class="articleCard">
+                        <!-- article title -->
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1" style="text-align: left; overflow-x:scroll; white-space: nowrap;">
+                                <h4>{{article.title ? article.title : 'No title'}}</h4>
+                            </div>
+                        </div>
+                        <!-- article date -->
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="col-sm-6">
+
+                                </div>
+                                <div class="col-sm-6" style="text-align: right;">
+                                    <p><strong>{{controllerObject.buildDate(article.time)}}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- article body -->
+                        <div class="row">
+                            <div class="col-sm-10 col-sm-offset-1">
+                                <div class="col-sm-6">
+                                    <p><a target="_blank" href='{{article.url}}'>Visit story</a></p>
+                                </div>
+                                <div class="col-sm-6" style="text-align: right;">
+                                    <p>{{article.by ? 'written by ' + article.by : 'No author'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="!controllerObject.currentPageArticles ||
+                            !controllerObject.currentPageArticles.length ||
+                            controllerObject.currentPageArticles.length < 1">
+                    <div class="articleCard">
+                        <p style="text-align: center; padding:20px;">
+                            <strong>Loading more articles...</strong>
+                        </p>
+                        <div style="text-align: center; padding:20px">
+                            <img src="loading.gif" alt="loadingImage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
